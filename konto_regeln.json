@@ -1,0 +1,110 @@
+[
+  {
+    "name": "Kaffee & Café's",
+    "keywords": [
+      "Dolce",
+      "KAFFEEBAR",
+      "COWVANA"
+    ],
+    "excludes": [],
+    "color": "#8b5cf6"
+  },
+  {
+    "name": "Lebensmittel",
+    "keywords": [
+      "Lidl",
+      "Kaufland",
+      "Rewe",
+      "DM",
+      "Rossmann",
+      "Aldi",
+      "Edeka"
+    ],
+    "excludes": [],
+    "color": "#fff100"
+  },
+  {
+    "name": "PayPal",
+    "keywords": [
+      "PayPal"
+    ],
+    "excludes": [
+      "Steam",
+      "DB"
+    ],
+    "color": "#99e6ff"
+  },
+  {
+    "name": "Amazon",
+    "keywords": [
+      "Amazon"
+    ],
+    "excludes": [],
+    "color": "#f97316"
+  },
+  {
+    "name": "Congstar",
+    "keywords": [
+      "Congstar",
+      "Handy"
+    ],
+    "excludes": [],
+    "color": "#8b5cf6"
+  },
+  {
+    "name": "Fixkosten",
+    "keywords": [
+      "Dauerauftrag",
+      "Miete",
+      "Spotify",
+      "Krankenkasse",
+      "Drillisch"
+    ],
+    "excludes": [],
+    "color": "#fca5a5"
+  },
+  {
+    "name": "Gesundheit",
+    "keywords": [
+      "Apotheke"
+    ],
+    "excludes": [],
+    "color": "#86efac"
+  },
+  {
+    "name": "Deutsche Bahn",
+    "keywords": [
+      "DB"
+    ],
+    "excludes": [],
+    "color": "#ff4d4d"
+  },
+  {
+    "name": "Steam",
+    "keywords": [
+      "Steam"
+    ],
+    "excludes": [],
+    "color": "#cbd5e1"
+  },
+  {
+    "name": "Mensa",
+    "keywords": [
+      "Mensa",
+      "Studentenwerk"
+    ],
+    "excludes": [],
+    "color": "#ff7ab3"
+  },
+  {
+    "name": "Bargeld",
+    "keywords": [
+      "Bargeld",
+      "Auszahlung",
+      "ATM",
+      "Geldautomat"
+    ],
+    "excludes": [],
+    "color": "#166534"
+  }
+]
