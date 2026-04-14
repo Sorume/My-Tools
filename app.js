@@ -44,13 +44,9 @@ let hasUnsavedChanges = false;
 
 document.addEventListener('DOMContentLoaded', loadSettings);
 
-function loadSettings() {
-    const savedRules = localStorage.getItem('konto_rules');
-    if (savedRules) {
-        try { rules = JSON.parse(savedRules); } catch(e) { console.error("Fehler beim Laden", e); }
-    }
-    
-    // UI Settings laden (Jetzt für beide Fenster!)
+// Das "async" ist wichtig, damit wir auf die Server-Antwort warten können
+async function loadSettings() {
+    // 1. UI Settings laden
     const uiSettings = JSON.parse(localStorage.getItem('konto_ui') || '{}');
     if (uiSettings.pdfWidth) pdfPanel.style.width = uiSettings.pdfWidth;
     if (uiSettings.pdfHeight) pdfPanel.style.height = uiSettings.pdfHeight;
@@ -62,7 +58,53 @@ function loadSettings() {
         document.getElementById('rulesCollapseIcon').classList.add('rotate-180');
     }
     
+    // 2. Regeln laden
+    const savedRules = localStorage.getItem('konto_rules');
+    // Wenn es schon lokale Regeln gibt, nehmen wir diese (damit nichts überschrieben wird)
+    if (savedRules && savedRules !== "[]" && savedRules !== null) {
+        try { 
+            rules = JSON.parse(savedRules); 
+        } catch(e) { console.error("Fehler beim Laden", e); }
+    } else {
+        // Wenn der Browser leer ist, versuchen wir sie von GitHub zu laden
+        try {
+            // Die Zeitangabe am Ende verhindert, dass der Browser eine alte Version aus dem Cache lädt
+            const response = await fetch('konto_regeln.json?t=' + new Date().getTime());
+            if (response.ok) {
+                rules = await response.json();
+                saveToLocalStorage(); // Direkt lokal speichern, damit die App reibungslos läuft
+            } else {
+                console.log("Keine Standardregeln auf dem Server gefunden.");
+            }
+        } catch(error) {
+            console.error("Fehler beim Abrufen der Regeln von GitHub:", error);
+        }
+    }
+    
     renderRules();
+}
+
+// NEU: Funktion für den Server-Sync-Button
+window.fetchRulesFromGitHub = async function() {
+    if (hasUnsavedChanges) {
+        if (!confirm("Du hast ungespeicherte Änderungen! Wenn du vom Server lädst, gehen diese verloren. Trotzdem fortfahren?")) return;
+    }
+    
+    try {
+        const response = await fetch('konto_regeln.json?t=' + new Date().getTime());
+        if (response.ok) {
+            rules = await response.json();
+            clearDirtyState();
+            saveToLocalStorage();
+            renderRules();
+            updateUI();
+            showToast("Regeln erfolgreich von GitHub geladen!");
+        } else {
+            alert("Fehler: konto_regeln.json konnte nicht auf GitHub gefunden werden.");
+        }
+    } catch(e) {
+        alert("Fehler beim Verbinden mit GitHub. Bitte prüfe deine Internetverbindung.");
+    }
 }
 
 function saveToLocalStorage() {
