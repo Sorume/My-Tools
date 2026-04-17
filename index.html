@@ -2,26 +2,69 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>Jeremys Web-Tools</title>
+    <title>Jeremys Tool-Dashboard</title>
     <style>
-        body { font-family: Arial, sans-serif; background-color: #1e1e1e; color: #fff; padding: 20px; text-align: center; }
-        .tool-link { 
-            display: inline-block; 
-            margin: 10px; 
-            padding: 15px 25px; 
-            background-color: #9e60f2; 
-            color: white; 
-            text-decoration: none; 
-            border-radius: 8px; 
-            font-weight: bold;
+        body { font-family: 'Segoe UI', sans-serif; background-color: #1e1e1e; color: #fff; padding: 40px; text-align: center; }
+        #tool-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 30px; }
+        .tool-card { 
+            background: #2d2d2d; border: 1px solid #444; border-radius: 12px; padding: 20px; width: 200px;
+            transition: all 0.3s ease; text-decoration: none; color: white; cursor: pointer;
         }
-        .tool-link:hover { background-color: #b47df6; }
+        .tool-card:hover { border-color: #9e60f2; transform: translateY(-5px); background: #363636; }
+        .tool-icon { font-size: 40px; margin-bottom: 10px; display: block; }
+        .tool-name { font-weight: bold; font-size: 16px; word-break: break-word; }
+        .loading { color: #888; font-style: italic; }
     </style>
 </head>
 <body>
-    <h1>🚀 Jeremys Tool-Dashboard</h1>
-    <p>Wähle ein Tool aus:</p>
+    <h1>🚀 Mein Tool-Dashboard</h1>
+    <p>Diese Liste aktualisiert sich automatisch bei jedem Upload.</p>
     
-    <a href="KontoApp.html" class="tool-link">💰 Meine Konto App</a>
+    <div id="tool-container">
+        <div class="loading">Suche nach Programmen...</div>
+    </div>
+
+    <script>
+        async function loadTools() {
+            const user = "sorume"; 
+            const repo = "My-Tools";
+            const container = document.getElementById('tool-container');
+
+            try {
+                // Wir fragen GitHub direkt nach dem Inhalt des Ordners
+                const response = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/`);
+                const files = await response.json();
+
+                container.innerHTML = ""; // Lade-Text entfernen
+
+                files.forEach(file => {
+                    // Wir listen nur .html Dateien auf, aber nicht die index.html selbst
+                    if (file.name.endsWith('.html') && file.name !== 'index.html') {
+                        const card = document.createElement('a');
+                        card.className = 'tool-card';
+                        card.href = file.name; // Link zur Datei
+                        
+                        // Den Namen schöner machen (Dateiendung weg)
+                        const displayName = file.name.replace('.html', '');
+                        
+                        card.innerHTML = `
+                            <span class="tool-icon">🛠️</span>
+                            <span class="tool-name">${displayName}</span>
+                        `;
+                        container.appendChild(card);
+                    }
+                });
+
+                if (container.innerHTML === "") {
+                    container.innerHTML = "<p>Keine Tools gefunden.</p>";
+                }
+            } catch (error) {
+                container.innerHTML = "<p>Fehler beim Laden der Liste.</p>";
+                console.error(error);
+            }
+        }
+
+        loadTools();
+    </script>
 </body>
 </html>
