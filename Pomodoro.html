@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍅</text></svg>">
+    <title>Pomodoro</title>
+    <link rel="stylesheet" href="PomoStyle.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Pomodoro</h1>
+        
+        <div class="mode-selectors">
+            <button id="btn-focus" class="mode-btn active">Fokus</button>
+            <button id="btn-short" class="mode-btn">Kurze Pause</button>
+            <button id="btn-long" class="mode-btn">Lange Pause</button>
+        </div>
+        
+        <div class="timer-display" id="time-left">25:00</div>
+        
+        <div class="controls">
+            <button id="start-btn">Start</button>
+            <button id="pause-btn">Pause</button>
+        </div>
+
+        <hr class="divider">
+
+        <details class="settings-collapse">
+            <summary>⚙️ Einstellungen</summary>
+            
+            <div class="settings-content">
+                <div class="setting-item">
+                    <label for="work-time">Fokus (Min):</label>
+                    <input type="number" id="work-time" value="25" min="1" max="120">
+                </div>
+                
+                <div class="setting-item">
+                    <label for="short-break">Kurze Pause (Min):</label>
+                    <input type="number" id="short-break" value="5" min="1" max="30">
+                </div>
+                
+                <div class="setting-item">
+                    <label for="long-break">Lange Pause (Min):</label>
+                    <input type="number" id="long-break" value="15" min="1" max="60">
+                </div>
+
+                <label class="toggle">
+                    <input type="checkbox" id="notify-toggle">
+                    Popups aktivieren
+                </label>
+
+                <button id="save-settings-btn">Speichern & Übernehmen</button>
+            </div>
+        </details>
+    </div>
+
+    <script src="PomoScript.js"></script>
+</body>
+</html>
