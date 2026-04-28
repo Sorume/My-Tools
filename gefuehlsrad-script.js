@@ -83,7 +83,9 @@ const emotionsData = {
 
 // --- 2. SETUP ---
 const svg = document.getElementById('wheel-container');
+const wheelGroup = document.getElementById('wheel-group'); // NEU: Unsere Gruppe
 const infoBox = document.getElementById('info-box');
+const rotationSlider = document.getElementById('rotation-slider'); // NEU: Der Slider
 
 const width = 900;
 const height = 900;
@@ -118,7 +120,6 @@ function describeArc(x, y, innerRadius, outerRadius, startAngle, endAngle) {
     const endOuter = polarToCartesian(x, y, outerRadius, startAngle);
     const startInner = polarToCartesian(x, y, innerRadius, endAngle);
     const endInner = polarToCartesian(x, y, innerRadius, startAngle);
-    // Ein kleiner Ausgleich, damit Kreise sauber geschlossen werden
     const sweepFlag = endAngle - startAngle <= 180 ? "0" : "1";
 
     return [
@@ -138,16 +139,18 @@ function drawWheel(node, depth, startAngle, sweepAngle, pathText, parentColor) {
         const outerRadius = depth * ringWidth;
         const color = node.color || parentColor;
 
-        // A) SVG Pfad (das farbige Tortenstück) zeichnen
+        // A) SVG Pfad zeichnen
         const pathData = describeArc(centerX, centerY, innerRadius, outerRadius, startAngle, startAngle + sweepAngle);
         const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
         path.setAttribute("d", pathData);
         path.setAttribute("fill", color);
         path.classList.add("slice");
         path.addEventListener("mouseover", () => infoBox.textContent = currentPath);
-        svg.appendChild(path);
+        
+        // WICHTIG: Pfad an die Gruppe anhängen, nicht ans SVG direkt!
+        wheelGroup.appendChild(path);
 
-        // B) Text platzieren und radial rotieren
+        // B) Text platzieren
         const midAngle = startAngle + sweepAngle / 2;
         const textRadius = innerRadius + (outerRadius - innerRadius) / 2;
         const textCoords = polarToCartesian(centerX, centerY, textRadius, midAngle);
@@ -156,12 +159,11 @@ function drawWheel(node, depth, startAngle, sweepAngle, pathText, parentColor) {
         textElement.textContent = node.name;
         textElement.classList.add("slice-text");
 
-        // LÖSUNG FÜR DIE ROTATION: 
-        // Wir ziehen 90 Grad vom Mittelwinkel ab, damit der Text exakt vom Zentrum nach außen "strahlt".
         const rotation = midAngle - 90;
-        
         textElement.setAttribute("transform", `translate(${textCoords.x}, ${textCoords.y}) rotate(${rotation})`);
-        svg.appendChild(textElement);
+        
+        // WICHTIG: Text an die Gruppe anhängen, nicht ans SVG direkt!
+        wheelGroup.appendChild(textElement);
 
         parentColor = color;
     }
@@ -179,14 +181,19 @@ function drawWheel(node, depth, startAngle, sweepAngle, pathText, parentColor) {
 }
 
 // --- 6. INITIALISIERUNG ---
-// Wir berechnen den Startwinkel so, dass das allererste Element ("Schlecht") 
-// exakt oben auf der 12-Uhr Position zentriert ist, wie im Foto.
 const firstChildWeight = emotionsData.children[0].weight;
 const initialAngle = -((firstChildWeight / totalWeight) * 360) / 2;
 
 drawWheel(emotionsData, 0, initialAngle, 360, "", null);
 
-// Tooltip zurücksetzen
 svg.addEventListener("mouseleave", () => {
     infoBox.textContent = "Fahre mit der Maus über das Rad...";
+});
+
+// --- 7. NEU: SLIDER LOGIK ---
+// Wenn der Slider bewegt wird, drehen wir die gesamte "wheelGroup"
+rotationSlider.addEventListener("input", (event) => {
+    const currentAngle = event.target.value;
+    // Die Transformation "rotate(winkel, x, y)" dreht die Gruppe um das exakte Zentrum
+    wheelGroup.setAttribute("transform", `rotate(${currentAngle}, ${centerX}, ${centerY})`);
 });
