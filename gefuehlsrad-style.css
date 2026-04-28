@@ -29,6 +29,21 @@ h1 {
     text-align: center;
 }
 
+/* NEU: Styling für den Slider-Bereich */
+.slider-container {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 1.1rem;
+}
+
+/* NEU: Den Slider etwas breiter machen */
+input[type="range"] {
+    width: 300px;
+    cursor: pointer;
+}
+
 /* Styling der SVG-Kreissegmente */
 .slice {
     stroke: #ffffff;
