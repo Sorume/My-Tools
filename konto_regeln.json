@@ -1,15 +1,5 @@
 [
   {
-    "name": "Kaffee & Café's",
-    "keywords": [
-      "Dolce",
-      "KAFFEEBAR",
-      "COWVANA"
-    ],
-    "excludes": [],
-    "color": "#8b5cf6"
-  },
-  {
     "name": "Lebensmittel",
     "keywords": [
       "Lidl",
@@ -50,18 +40,6 @@
     ],
     "excludes": [],
     "color": "#8b5cf6"
-  },
-  {
-    "name": "Fixkosten",
-    "keywords": [
-      "Dauerauftrag",
-      "Miete",
-      "Spotify",
-      "Krankenkasse",
-      "Drillisch"
-    ],
-    "excludes": [],
-    "color": "#fca5a5"
   },
   {
     "name": "Gesundheit",
@@ -106,5 +84,40 @@
     ],
     "excludes": [],
     "color": "#166534"
+  },
+  {
+    "name": "Wohnung",
+    "keywords": [
+      "Dauerauftrag",
+      "Miete",
+      "Krankenkasse",
+      "Drillisch",
+      "Rundfunk",
+      "Debitkart",
+      "eprimo"
+    ],
+    "excludes": [],
+    "color": "#fca5a5"
+  },
+  {
+    "name": "Abos",
+    "keywords": [
+      "Spotify",
+      "Audible",
+      "Easyfitness"
+    ],
+    "excludes": [],
+    "color": "#b5f12e"
+  },
+  {
+    "name": "Kaffee & Cafès",
+    "keywords": [
+      "Dolce",
+      "KAFFEEBAR",
+      "COWVANA",
+      "SumUp"
+    ],
+    "excludes": [],
+    "color": "#8b5cf6"
   }
 ]
