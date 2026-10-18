@@ -8,7 +8,12 @@
       "DM",
       "Rossmann",
       "Aldi",
-      "Edeka"
+      "Edeka",
+      "goasia",
+      "Netto",
+      "backwerk",
+      "NP-Markt",
+      "McDonalds"
     ],
     "excludes": [],
     "color": "#fff100"
@@ -69,7 +74,8 @@
     "name": "Mensa",
     "keywords": [
       "Mensa",
-      "Studentenwerk"
+      "Studentenwerk",
+      "Kellercafe"
     ],
     "excludes": [],
     "color": "#ff7ab3"
@@ -116,6 +122,14 @@
       "KAFFEEBAR",
       "COWVANA",
       "SumUp"
+    ],
+    "excludes": [],
+    "color": "#8b5cf6"
+  },
+  {
+    "name": "IKEA",
+    "keywords": [
+      "Ikea"
     ],
     "excludes": [],
     "color": "#8b5cf6"
